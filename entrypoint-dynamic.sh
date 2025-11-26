@@ -14,7 +14,7 @@ AUTOSSH_COMMON_OPTS="\
      -o ServerAliveCountMax=3 \
      -o ExitOnForwardFailure=yes \
      -o StrictHostKeyChecking=yes \
-     -o UserKnownHostsFile=${KNOWN_HOSTS_PATH} \
+     -o UserKnownHostsFile=/root/.ssh/known_hosts \
      -p ${SSH_PORT} \
      -i ${SSH_KEY_PATH} \
      ${SSH_USER}@${SSH_HOST}"
