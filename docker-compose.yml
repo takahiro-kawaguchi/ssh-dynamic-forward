@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  autossh-jump-host:
+  autossh-dynamic-forward:
     build:
       context: .
       dockerfile: Dockerfile
@@ -34,6 +34,3 @@ services:
       - ./ssh_key/${IDENTITY_FILE}:/root/.ssh/${IDENTITY_FILE}:ro
       
       - ./ssh_key/known_hosts:/root/.ssh/known_hosts:ro
-      
-      # --- 2. 入ってくる接続用 (User -> Container) ---
-      - ./ssh_key/authorized_keys:/root/mounted_keys/authorized_keys:ro
