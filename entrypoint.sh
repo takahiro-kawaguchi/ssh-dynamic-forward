@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# 環境変数
 DYNAMIC_PORT=${DYNAMIC_PORT:-1080}
 PROXY_ADDRESS="0.0.0.0:${DYNAMIC_PORT}" 
 

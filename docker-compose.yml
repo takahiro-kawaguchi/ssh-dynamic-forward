@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   autossh-dynamic-forward:
     build:
@@ -8,29 +6,19 @@ services:
     restart: unless-stopped
 
     environment:
-      # --- 踏み台設定 ---
-      JUMP_USER: "${JUMP_USER}"
-
       # --- リモートサーバーへの接続情報 ---
       SSH_USER: "${SSH_USER}"
       SSH_HOST: "${SSH_HOST}"
       SSH_PORT: "${SSH_PORT}"
       
-      # --- 鍵パス設定 (重要) ---
-      # コンテナ内の鍵パスを、マウントしたファイル名に合わせます
       SSH_KEY_PATH: "/root/.ssh/${IDENTITY_FILE}"
 
       # --- トンネル設定 ---
       DYNAMIC_PORT: "${DYNAMIC_PORT}"
     
     ports:
-      # --- コンテナのDYNAMIC_PORTをホストの同じポートにマッピング ---
       - "${DYNAMIC_PORT}:${DYNAMIC_PORT}"
 
     volumes:
-      # --- 1. 出ていく接続用 (Autossh -> Remote Server) ---
-      # 変数を使ってファイル名を動的に指定
-      # ホストの ./ssh_key/[ファイル名] を コンテナの /root/.ssh/[ファイル名] にマウント
       - ./ssh_key/${IDENTITY_FILE}:/root/.ssh/${IDENTITY_FILE}:ro
-      
       - ./ssh_key/known_hosts:/root/.ssh/known_hosts:ro

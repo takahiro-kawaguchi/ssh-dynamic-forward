@@ -1,6 +1,13 @@
-FROM ghcr.io/takahiro-kawaguchi/autossh-jump-base:main
+FROM debian:stable-slim
 
-COPY entrypoint-dynamic.sh /entrypoint-dynamic.sh
-RUN chmod +x /entrypoint-dynamic.sh
+RUN apt update && \
+    DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
+    openssh-client \
+    autossh \
+    rm -rf /var/lib/apt/lists/*
 
-CMD ["/entrypoint-dynamic.sh"]
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# コンテナ起動時にスクリプトを実行
+ENTRYPOINT ["/entrypoint.sh"]
