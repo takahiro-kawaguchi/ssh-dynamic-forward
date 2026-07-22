@@ -32,7 +32,7 @@ AUTOSSH_COMMON_OPTS="\
      -N \
      -o ServerAliveInterval=30 \
      -o ServerAliveCountMax=3 \
-     -o ExitOnForwardFailure=no \
+     -o ExitOnForwardFailure=yes \
      -o StrictHostKeyChecking=yes \
      -o UserKnownHostsFile=/root/.ssh/known_hosts \
      -p ${SSH_PORT} \
