@@ -48,22 +48,15 @@ ssh_key/
 ssh-keyscan -p ${SSH_PORT} ${SSH_HOST} > ssh_key/known_hosts
 ```
 
-### 3. `DYNAMIC_PORT`(SOCKSプロキシ)を使う場合
-
-ホストからアクセスできるように、`docker-compose.yml`の`ports`セクションのコメントを外してください。
-
-```yaml
-    ports:
-      - "${DYNAMIC_PORT}:${DYNAMIC_PORT}"
-```
-
-`LOCAL_TUNNELS`/`REMOTE_TUNNELS`のみを使う場合は不要です。
-
-### 4. 起動
+### 3. 起動
 
 ```bash
-docker compose up -d --build
+./up.sh
 ```
+
+`docker compose up -d --build`を直接使わず、必ず`up.sh`経由で起動してください。`.env`の`DYNAMIC_PORT`を見て、必要なら`docker-compose.override.yml`(gitignore対象、自動生成)を作り、Dockerホストに`${DYNAMIC_PORT}`を公開します。`docker-compose.yml`本体は編集不要です。
+
+> **`LOCAL_TUNNELS`は`ports`自動公開に対応していません。** `up.sh`が面倒を見るのは`DYNAMIC_PORT`のみです。`-R`(`REMOTE_TUNNELS`)はリッスンソケットがリモートサーバー側に開くため`ports`公開自体が不要ですが、`-L`(`LOCAL_TUNNELS`)はコンテナ側にリッスンソケットが開くため、Dockerホストの外や別ホストからアクセスしたい場合は`docker-compose.override.yml`に自分で`ports`を追記してください。コンテナ内や同一Dockerネットワーク内だけで完結する使い方なら不要です。
 
 ## 再接続について
 

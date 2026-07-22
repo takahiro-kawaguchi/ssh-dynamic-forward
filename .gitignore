@@ -1,5 +1,6 @@
 .env
 ssh_key/
+docker-compose.override.yml
 
 .DS_Store
 Thumbs.db
